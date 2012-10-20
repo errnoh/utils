@@ -52,7 +52,7 @@ func (p *BGRA) Set(x, y int, c color.Color) {
 	p.Pix[i+3] = c1.A
 }
 
-func (p *BGRA) SetBGRA(x, y int, c color.RGBA) {
+func (p *BGRA) SetRGBA(x, y int, c color.RGBA) {
 	if !(image.Point{x, y}.In(p.Rect)) {
 		return
 	}
