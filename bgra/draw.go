@@ -15,11 +15,11 @@ type Image interface {
 	Set(x, y int, c color.Color)
 }
 
-func Draw(dst Image, r image.Rectangle, src image.Image, sp image.Point, op draw.Op) {
+func Draw(dst draw.Image, r image.Rectangle, src image.Image, sp image.Point, op draw.Op) {
 	DrawMask(dst, r, src, sp, nil, image.ZP, op)
 }
 
-func clip(dst Image, r *image.Rectangle, src image.Image, sp *image.Point, mask image.Image, mp *image.Point) {
+func clip(dst draw.Image, r *image.Rectangle, src image.Image, sp *image.Point, mask image.Image, mp *image.Point) {
 	orig := r.Min
 	*r = r.Intersect(dst.Bounds())
 	*r = r.Intersect(src.Bounds().Add(orig.Sub(*sp)))
@@ -37,7 +37,7 @@ func clip(dst Image, r *image.Rectangle, src image.Image, sp *image.Point, mask 
 	(*mp).Y += dy
 }
 
-func DrawMask(dst Image, r image.Rectangle, src image.Image, sp image.Point, mask image.Image, mp image.Point, op draw.Op) {
+func DrawMask(dst draw.Image, r image.Rectangle, src image.Image, sp image.Point, mask image.Image, mp image.Point, op draw.Op) {
 	clip(dst, &r, src, &sp, mask, &mp)
 	if r.Empty() {
 		return
